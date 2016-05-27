@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var desireds = require('./tests/desireds');
+var desireds = require('desireds');
 
 var gruntConfig = {
         env: {
@@ -15,10 +15,10 @@ var gruntConfig = {
                     clearRequireCache: true,
                     colors: true,
                     quite: true,
-                    captureFile: 'tests/server/mochatest.json',
+                    captureFile: 'server/mochatest.json',
                     gruntLogHeader: false
                 },
-                src: ['tests/server/*.spec.js']
+                src: ['server/*.spec.js']
             },
             'server-side-spec': {
                 options: {
@@ -27,7 +27,7 @@ var gruntConfig = {
                     colors: true,
                     quite: true
                 },
-                src: ['tests/server/*.spec.js']
+                src: ['server/*.spec.js']
             },
             'fvt': {
                 options: {
@@ -35,9 +35,9 @@ var gruntConfig = {
                     clearRequireCache: true,
                     colors: true,
                     quite: true,
-                    captureFile: 'tests/fvt/mochafvttest.json'
+                    captureFile: 'fvt/mochafvttest.json'
                 },
-                src: ['tests/fvt/*.spec.js']
+                src: ['fvt/*.spec.js']
             },
             'fvt-spec': {
                 options: {
@@ -46,7 +46,7 @@ var gruntConfig = {
                     colors: true,
                     quite: true
                 },
-                src: ['tests/fvt/*.spec.js']
+                src: ['fvt/*.spec.js']
             }
         },
 
@@ -55,7 +55,7 @@ var gruntConfig = {
                 force: true,
                 expand: true
             },
-            coverage: ['tests/server/coverage', 'tests/server/mochatest.json', 'tests/fvt/mochafvttest.json']
+            coverage: ['server/coverage', 'server/mochatest.json', 'fvt/mochafvttest.json']
         },
         
         copy: {
@@ -63,32 +63,32 @@ var gruntConfig = {
                 nonull: true,
                 files: [{
                     expand: true,
-                    dest: 'tests/server/coverage/instrumented',
+                    dest: 'server/coverage/instrumented',
                     src: ['routes/db.js']
                 }]
             }
         },
 
         instrument: {
-            files: ['routes/items.js'],
+            files: ['../routes/items.js'],
             options: {
                 lazy: false,
-                basePath: 'tests/server/coverage/instrumented/'
+                basePath: 'server/coverage/instrumented/'
             }
         },
 
         storeCoverage: {
             options: {
-                dir: 'tests/server/coverage/reports'
+                dir: 'server/coverage/reports'
             }
         },
 
         makeReport: {
-            src: 'tests/server/coverage/reports/*.json',
+            src: 'server/coverage/reports/*.json',
             options: {
                 type: 'html',
                 type: 'json-summary',
-                dir: 'tests/server/coverage/reports',
+                dir: 'server/coverage/reports',
                 file: 'coverage-summary.json'
                 //print: 'detail'
             }
@@ -100,14 +100,14 @@ var gruntConfig = {
                     timeout: 60000,
                     reporter: 'spec-xunit-file',
                 },
-                src: ['tests/sauce_actual/test-cases.js']
+                src: ['sauce_actual/test-cases.js']
             },
             sauce_node: {
                 options: {
                     timeout: 60000,
                     reporter: 'spec-xunit-file',
                 },
-                src: ['tests/sauce/test-cases.js']
+                src: ['sauce/test-cases.js']
             }
         },    
         jshint: {
